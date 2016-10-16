@@ -11,5 +11,14 @@
     <string name="order_key" translatable="false">order</string>
     <string name="order_title" translatable="true">Sort Order</string>
     <string name="title_activity_settings" translatable="true">Settings</string>
+    <string name="title_activity_detail">DetailActivity</string>
+
+    <!-- Extras infos -->
+    <string name="extraTitle" translatable="false">extraTitle</string>
+    <string name="extraVote" translatable="false">extraVote</string>
+    <string name="extraPoster" translatable="false">extraPoster</string>
+    <string name="extraRelease" translatable="false">extraRelease</string>
+    <string name="extraSynopsis" translatable="false">extraSynopsis</string>
+
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.android.popularmoviesst1;
+package com.example.android.popularmovies;
 
 /**
  * Created by romul on 13/10/2016.

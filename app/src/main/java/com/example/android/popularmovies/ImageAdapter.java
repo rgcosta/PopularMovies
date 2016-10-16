@@ -1,4 +1,4 @@
-package com.example.android.popularmoviesst1;
+package com.example.android.popularmovies;
 
 import android.content.Context;
 import android.view.View;
@@ -27,8 +27,8 @@ public class ImageAdapter extends BaseAdapter{
     public ImageAdapter(Context c){
         this.mContext = c;
         this.mMovies = new ArrayList<>();
-        mHeight = Math.round(mContext.getResources().getDimension(R.dimen.poster_height));
-        mWidth = Math.round(mContext.getResources().getDimension(R.dimen.poster_width));
+        mHeight = Math.round(mContext.getResources().getDimension(com.example.android.popularmovies.R.dimen.poster_height));
+        mWidth = Math.round(mContext.getResources().getDimension(com.example.android.popularmovies.R.dimen.poster_width));
     }
 
     @Override

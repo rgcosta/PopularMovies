@@ -1,6 +1,10 @@
-package com.example.android.popularmoviesst1;
+package com.example.android.popularmovies;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,27 +43,49 @@ public class MoviesFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FetchMoviesTask fetchMoviesTask = new FetchMoviesTask();
-        fetchMoviesTask.execute();
+        if (isOnline()){
+            FetchMoviesTask fetchMoviesTask = new FetchMoviesTask();
+            fetchMoviesTask.execute();
+        } else {
+            Toast toast = Toast.makeText(getActivity(), "Verifique a conexão com a Internet", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    public boolean isOnline(){
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(com.example.android.popularmovies.R.layout.fragment_main, container, false);
 
         //Define the adapter for the gridView
         moviesAdapter = new ImageAdapter(getActivity());
 
-        GridView gridMovies = (GridView) view.findViewById(R.id.gridMovies);
+        GridView gridMovies = (GridView) view.findViewById(com.example.android.popularmovies.R.id.gridMovies);
         gridMovies.setAdapter(moviesAdapter);
 
         gridMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                  Toast.makeText(getContext(), "" + position,
-                      Toast.LENGTH_SHORT).show();
+                  //Toast.makeText(getContext(), "" + position,
+                    //  Toast.LENGTH_SHORT).show();
+
+                //Get movie selected
+                Movie movie = moviesAdapter.getItem(position);
+
+                Intent intentDetail = new Intent(getContext(), DetailActivity.class);
+                intentDetail.putExtra(getString(com.example.android.popularmovies.R.string.extraTitle), movie.originalTitle );
+                intentDetail.putExtra(getString(com.example.android.popularmovies.R.string.extraVote), movie.voteAverage);
+                intentDetail.putExtra(getString(com.example.android.popularmovies.R.string.extraPoster), movie.posterPathFull);
+                intentDetail.putExtra(getString(com.example.android.popularmovies.R.string.extraRelease), movie.releaseDate);
+                intentDetail.putExtra(getString(com.example.android.popularmovies.R.string.extraSynopsis), movie.Synopsis);
+                startActivity(intentDetail);
             }
         });
 
@@ -94,8 +120,8 @@ public class MoviesFragment extends Fragment {
 
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 String Order = sharedPreferences.getString(
-                        getString(R.string.order_key),
-                        getString(R.string.pref_sort_value_default));
+                        getString(com.example.android.popularmovies.R.string.order_key),
+                        getString(com.example.android.popularmovies.R.string.pref_sort_value_default));
 
                 Uri builtUri = Uri.parse(MOVIES_BASE_URI).buildUpon()
                         .appendPath(Order)

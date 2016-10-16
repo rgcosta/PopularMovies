@@ -1,4 +1,4 @@
-package com.example.android.popularmoviesst1;
+package com.example.android.popularmovies;
 
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -21,11 +21,11 @@ public class Settings extends PreferenceActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Add 'general' preferences, defined in the XML file
-        addPreferencesFromResource(R.xml.pref_movies);
+        addPreferencesFromResource(com.example.android.popularmovies.R.xml.pref_movies);
 
         // For all preferences, attach an OnPreferenceChangeListener so the UI summary can be
         // updated when the preference changes.
-        bindPreferenceSummaryToValue(findPreference(getString(R.string.order_key)));
+        bindPreferenceSummaryToValue(findPreference(getString(com.example.android.popularmovies.R.string.order_key)));
     }
 
     /**
